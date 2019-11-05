@@ -1,0 +1,51 @@
+name: m2-actions-test
+
+on: [push]
+
+jobs:
+  magento2-build:
+    runs-on: ubuntu-18.04
+    name: 'build m2'
+    services:
+      mysql:
+        image: docker://mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        ports:
+          - 3106:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      elasticsearch:
+        image: docker://madit512/magento2-elasticsearch:5.6
+        ports:
+          - 9200:9200
+          
+    steps:
+    - uses: actions/checkout@master
+    - name: 'launch magento2 unit test'
+      if: always()
+      uses: MAD-I-T/magento-actions@master
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'unit-test'
+        elasticsuite: 1
+    - name: 'launch magento2 static test'
+      if: always()
+      uses: MAD-I-T/magento-actions@master
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'static-test'
+        elasticsuite: 1
+    - name: 'launch magento2 build'
+      if: always()
+      uses: MAD-I-T/magento-actions@master
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'build'
+        elasticsuite: 1

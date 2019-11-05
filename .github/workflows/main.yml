@@ -42,7 +42,6 @@ jobs:
       with:
         php: '7.1'
         process: 'static-test'
-        elasticsuite: 0
     - name: 'launch magento2 build'
       if: always()
       uses: MAD-I-T/magento-actions@master

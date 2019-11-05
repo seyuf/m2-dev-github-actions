@@ -33,7 +33,7 @@ jobs:
       with:
         php: '7.1'
         process: 'unit-test'
-        elasticsuite: 1
+        elasticsuite: 0
     - name: 'launch magento2 static test'
       if: always()
       uses: MAD-I-T/magento-actions@master
@@ -42,7 +42,7 @@ jobs:
       with:
         php: '7.1'
         process: 'static-test'
-        elasticsuite: 1
+        elasticsuite: 0
     - name: 'launch magento2 build'
       if: always()
       uses: MAD-I-T/magento-actions@master
@@ -51,4 +51,3 @@ jobs:
       with:
         php: '7.1'
         process: 'build'
-        elasticsuite: 1

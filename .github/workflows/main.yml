@@ -5,7 +5,7 @@ on: [push]
 jobs:
   magento2-build:
     runs-on: ubuntu-18.04
-    name: 'build m2'
+    name: 'm2 tests & build'
     services:
       mysql:
         image: docker://mysql:5.7
@@ -19,7 +19,6 @@ jobs:
     - uses: actions/checkout@master
       with:
         submodules: recursive
-        fetch-depth: 1
     - name: 'launch magento2 unit test'
       if: always()
       uses: MAD-I-T/magento-actions@master
@@ -48,7 +47,7 @@ jobs:
 
   magento2-integration-test:
     runs-on: ubuntu-18.04
-    name: 'build m2'
+    name: 'm2 integration test'
     services:
       mysql:
         image: docker://mysql:5.7

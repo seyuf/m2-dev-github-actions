@@ -36,6 +36,16 @@ jobs:
       with:
         php: '7.1'
         process: 'static-test'
+    - name: 'phpcs testing'
+        if: always()
+        uses: MAD-I-T/magento-actions@master
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          php: '7.1'
+          process: 'phpcs-test'
+          extension: 'Magento/CatalogSearch'
+          standard: 'Magento2'
     - name: 'launch magento2 build'
       if: always()
       uses: MAD-I-T/magento-actions@master

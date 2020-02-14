@@ -29,7 +29,7 @@ jobs:
         process: 'unit-test'
         elasticsuite: 0
     - name: 'launch magento2 static test'
-      if: failed()
+      if: failure()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

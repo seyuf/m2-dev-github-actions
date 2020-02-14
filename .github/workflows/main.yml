@@ -56,7 +56,7 @@ jobs:
         process: 'build'
     - name: 'launch magento2 zero downtime deploy'
       if: success()
-      uses: ./
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -72,7 +72,7 @@ jobs:
         process: 'deploy-staging'
     - name: 'unlock deployer if fails'
       if: failure() || cancelled()
-      uses: ./
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz

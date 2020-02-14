@@ -62,12 +62,9 @@ jobs:
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
         MYSQL_ROOT_PASSWORD: magento
         MYSQL_DATABASE: magento
-        USER: ${{secrets.STAGE_USER}}
-        HOST: ${{secrets.STAGE_HOST}}
         HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
         HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
         SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
-        SSH_KEYSCAN: ${{secrets.STAGE_SSH_KEYSCAN}}
         SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
@@ -81,12 +78,9 @@ jobs:
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
         MYSQL_ROOT_PASSWORD: magento
         MYSQL_DATABASE: magento
-        USER: ${{secrets.STAGE_USER}}
-        HOST: ${{secrets.STAGE_HOST}}
         HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
         HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
         SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
-        SSH_KEYSCAN: ${{secrets.STAGE_SSH_KEYSCAN}}
         SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:

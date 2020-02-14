@@ -37,7 +37,7 @@ jobs:
         php: '7.1'
         process: 'static-test'
     - name: 'phpcs testing'
-      if: ${{true}}
+      if: ${{false}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

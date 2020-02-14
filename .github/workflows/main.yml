@@ -16,7 +16,7 @@ jobs:
           - 3106:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v1
       with:
         submodules: recursive
     - name: 'launch magento2 unit test'
@@ -29,7 +29,7 @@ jobs:
         process: 'unit-test'
         elasticsuite: 0
     - name: 'launch magento2 static test'
-      if: failure()
+      if: ${{false}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

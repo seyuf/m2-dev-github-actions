@@ -8,13 +8,17 @@ jobs:
     name: 'm2 tests & build'
     services:
       mysql:
-        image: docker://mysql:5.7
+        image: docker://mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: magento
           MYSQL_DATABASE: magento
         ports:
           - 3106:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      elasticsearch:
+        image: docker://elasticsearch:7.1
+        ports:
+          - 9200:9200
     steps:
     - uses: actions/checkout@v1
       with:
@@ -25,24 +29,25 @@ jobs:
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.1'
+        php: '7.4'
         process: 'unit-test'
-        elasticsuite: 0
+        elasticsuite: 1
     - name: 'launch magento2 static test'
       if: ${{true}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.1'
+        php: '7.4'
         process: 'static-test'
+        elasticsuite: 1
     - name: 'phpcs testing'
       if: ${{false}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.1'
+        php: '7.4'
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'
@@ -52,8 +57,9 @@ jobs:
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.1'
+        php: '7.4'
         process: 'build'
+        elasticsuite: 1
     - name: 'launch magento2 zero downtime deploy'
       if: success()
       uses: MAD-I-T/magento-actions@master
@@ -68,7 +74,7 @@ jobs:
         SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
-        php: '7.1'
+        php: '7.4'
         process: 'deploy-staging'
     - name: 'unlock deployer if fails'
       if: failure() || cancelled()
@@ -84,7 +90,7 @@ jobs:
         SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
-        php: '7.1'
+        php: '7.4'
         process: 'cleanup-staging'
 
  # magento2-integration-test:

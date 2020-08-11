@@ -16,7 +16,7 @@ jobs:
           - 3106:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       elasticsearch:
-        image: docker://elasticsearch:7.1
+        image: docker://elasticsearch:7.1.0
         ports:
           - 9200:9200
     steps:

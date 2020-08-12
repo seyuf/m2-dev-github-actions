@@ -21,6 +21,7 @@ chmod +x bin/magento
 
 
 #apt-get update && apt-get install -y mysql-server
+apt-get update && apt-get install -y mysql-client
 
 if [ $INPUT_ELASTICSUITE = 1 ]
 then

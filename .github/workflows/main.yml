@@ -44,7 +44,7 @@ jobs:
         process: 'static-test'
         elasticsearch: 1
     - name: 'phpcs testing'
-      if: ${{true}}
+      if: ${{false}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -95,36 +95,41 @@ jobs:
         php: '7.4'
         process: 'cleanup-staging'
 
- # magento2-integration-test:
- #   runs-on: ubuntu-18.04
- #   name: 'm2 integration test'
- #   services:
- #     mysql:
- #       image: docker://mysql:5.7
- #       env:
- #         MYSQL_ROOT_PASSWORD: magento
- #         MYSQL_DATABASE: magento
- #       ports:
- #         - 3106:3306
- #       options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
- #     rabbitmq:
- #       image: docker://rabbitmq:3.6.6-alpine
- #       env:
- #         RABBITMQ_DEFAULT_USER: "magento"
- #         RABBITMQ_DEFAULT_PASS: "magento"
- #         RABBITMQ_DEFAULT_VHOST: "/"
- #       ports:
- #         - 5672:5672
+ magento2-integration-test:
+   runs-on: ubuntu-18.04
+   name: 'm2 integration test'
+   services:
+     mysql:
+       image: docker://mysql:5.7
+       env:
+         MYSQL_ROOT_PASSWORD: magento
+         MYSQL_DATABASE: magento
+       ports:
+         - 3106:3306
+       options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+     elasticsearch:
+       image: docker://elasticsearch:7.1.0
+       ports:
+         - 9200:9200
+       options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+     rabbitmq:
+       image: docker://rabbitmq:3.6.6-alpine
+       env:
+         RABBITMQ_DEFAULT_USER: "magento"
+         RABBITMQ_DEFAULT_PASS: "magento"
+         RABBITMQ_DEFAULT_VHOST: "/"
+       ports:
+         - 5672:5672
 
- #   steps:
- #     - uses: actions/checkout@master
- #       with:
- #         submodules: recursive
- #     - name: 'launch magento2 integration test'
- #       uses: MAD-I-T/magento-actions@master
- #       env:
- #         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
- #       with:
- #         php: '7.1'
- #         process: 'integration-test'
- #         elasticsuite: 0
+   steps:
+     - uses: actions/checkout@v1
+       with:
+         submodules: recursive
+     - name: 'launch magento2 integration test'
+       uses: MAD-I-T/magento-actions@master
+       env:
+         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+       with:
+         php: '7.1'
+         process: 'integration-test'
+         elasticsearch: 1

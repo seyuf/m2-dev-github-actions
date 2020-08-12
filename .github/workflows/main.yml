@@ -106,8 +106,8 @@ jobs:
           MYSQL_ROOT_PASSWORD: magento
           MYSQL_DATABASE: magento
         ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 3106:3306
+        options: --health-cmd="mysqladmin ping && mysqladmin -h mysql -u root -pmagento -p3106 status" --health-interval=10s --health-timeout=5s --health-retries=3
       elasticsearch:
         image: docker://elasticsearch:7.1.0
         ports:

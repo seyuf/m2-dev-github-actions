@@ -97,7 +97,7 @@ jobs:
 
   magento2-integration-test:
     runs-on: ubuntu-latest
-    container: alpine
+    #container: alpine
     name: 'm2 integration test'
     services:
       mysql:

@@ -54,7 +54,7 @@ jobs:
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'
     - name: 'launch magento2 build'
-      if: always()
+      if: ${{false}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

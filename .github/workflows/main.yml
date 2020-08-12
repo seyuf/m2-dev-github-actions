@@ -101,7 +101,7 @@ jobs:
     name: 'm2 integration test'
     services:
       mysql:
-        image: docker://mysql:5.7
+        image: docker://mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: magento
           MYSQL_DATABASE: magento
@@ -109,7 +109,7 @@ jobs:
           - 3106:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       elasticsearch:
-        image: docker://elasticsearch:7.1.0
+        image: docker://elasticsearch:7.4.0
         ports:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
@@ -131,6 +131,6 @@ jobs:
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
-          php: '7.1'
+          php: '7.4'
           process: 'integration-test'
           elasticsearch: 1

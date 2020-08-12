@@ -96,7 +96,8 @@ jobs:
         process: 'cleanup-staging'
 
  magento2-integration-test:
-   runs-on: ubuntu-18.04
+   runs-on: ubuntu-latest
+   container: ubuntu
    name: 'm2 integration test'
    services:
      mysql:

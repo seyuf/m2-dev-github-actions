@@ -44,7 +44,7 @@ jobs:
         process: 'static-test'
         elasticsearch: 1
     - name: 'phpcs testing'
-      if: ${{false}}
+      if: ${{true}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

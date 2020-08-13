@@ -27,7 +27,7 @@ mysqladmin -h mysql -u root -pmagento --port=3306 status
 
 echo "test admin mysql"
 
-mysqladmin -h mysql -u root -pmagento --port=3106 status
+#mysqladmin -h mysql -u root -pmagento --port=3106 status
 
 if [ $INPUT_ELASTICSUITE = 1 ]
 then

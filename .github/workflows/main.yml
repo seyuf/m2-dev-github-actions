@@ -26,7 +26,7 @@ jobs:
       with:
         submodules: recursive
     - name: 'launch magento2 unit test'
-      if: ${{false}}
+      if: ${{true}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

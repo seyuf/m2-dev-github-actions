@@ -129,6 +129,7 @@ jobs:
         with:
           submodules: recursive
       - name: 'launch magento2 integration test'
+        if: ${{false}}
         uses: MAD-I-T/magento-actions@master
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

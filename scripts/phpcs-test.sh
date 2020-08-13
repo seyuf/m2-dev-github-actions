@@ -8,6 +8,6 @@ composer create-project magento/magento-coding-standard --stability=dev magento-
 
 cd $PROJECT_PATH/magento-coding-standard
 
-EXIT_CODE=vendor/bin/phpcs --standard=$INPUT_STANDARD $PROJECT_PATH/magento/app/code/$INPUT_EXTENSION
-echo "exit-code is $? - ${EXIT_CODE}"
+vendor/bin/phpcs --standard=$INPUT_STANDARD $PROJECT_PATH/magento/app/code/$INPUT_EXTENSION
+echo "exit-code is $? - "
 

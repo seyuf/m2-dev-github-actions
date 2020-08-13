@@ -53,7 +53,7 @@ jobs:
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'
-        override_settings: 1
+        override_settings: true
     - name: 'launch magento2 build'
       if: ${{false}}
       uses: MAD-I-T/magento-actions@master

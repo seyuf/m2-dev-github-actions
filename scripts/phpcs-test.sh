@@ -10,7 +10,7 @@ cd $PROJECT_PATH/magento-coding-standard
 
 echo "launching tests..."
 
-vendor/bin/phpcs --standard=$INPUT_STANDARD $PROJECT_PATH/magento/app/code/$INPUT_EXTENSION 2>&1 /dev/null
+vendor/bin/phpcs --standard=$INPUT_STANDARD $PROJECT_PATH/magento/app/code/$INPUT_EXTENSION >/dev/null 2>&1
 
 echo "exit-code is $? - "
 

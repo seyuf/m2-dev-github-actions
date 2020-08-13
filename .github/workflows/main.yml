@@ -51,10 +51,10 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         php: '7.4'
+        override_settings: 1
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'
-        override settings: 1
     - name: 'launch magento2 build'
       if: ${{false}}
       uses: MAD-I-T/magento-actions@master

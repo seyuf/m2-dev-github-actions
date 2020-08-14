@@ -34,7 +34,7 @@ jobs:
         php: '7.4'
         process: 'unit-test'
         elasticsearch: 1
-        override settings: 1
+        override_settings: 1
     - name: 'launch magento2 static test'
       if: ${{false}}
       uses: MAD-I-T/magento-actions@master
@@ -44,7 +44,7 @@ jobs:
         php: '7.4'
         process: 'static-test'
         elasticsearch: 1
-        override settings: 1
+        override_settings: 1
     - name: 'phpcs testing'
       if: ${{true}}
       uses: MAD-I-T/magento-actions@master

@@ -39,7 +39,7 @@ jobs:
     - name: 'launch magento2 static test'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -50,7 +50,7 @@ jobs:
     - name: 'phpcs testing'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -61,7 +61,7 @@ jobs:
         standard: 'Magento2'
     - name: 'launch magento2 build'
       if: ${{true}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -112,10 +112,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: magento
           MYSQL_DATABASE: magento
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5 -e MYSQL_ROOT_PASSWORD=magento -e MYSQL_USER=magento -e MYSQL_PASSWORD=magento -e MYSQL_DATABASE=magento --entrypoint sh mysql:8 -c "exec docker-entrypoint.sh mysqld --default-authentication-plugin=mysql_native_password"
-        #--health-cmd="mysqladmin ping && mysqladmin -h mysql -u root -pmagento --port=3306 status" --health-interval=10s --health-timeout=5s --health-retries=3  --entrypoint sh mysql:8 -c "exec docker-entrypoint.sh mysqld --default-authentication-plugin=mysql_native_password"
-        #--entrypoint="/entrypoint.sh --default-authentication-plugin=mysql_native_password"
-        #--health-cmd="mysqladmin ping && mysqladmin -h mysql -u root -pmagento --port=3306 status" --health-interval=10s --health-timeout=5s --health-retries=3
-        #command: mysqld --default-authentication-plugin=mysql_native_password --skip-mysqlx
       elasticsearch:
         image: docker://elasticsearch:7.1.0
         ports:

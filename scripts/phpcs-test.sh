@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
 
 PROJECT_PATH="$(pwd)"
 
@@ -10,7 +9,7 @@ cd $PROJECT_PATH/magento-coding-standard
 
 echo "launching tests..."
 
-vendor/bin/phpcs --standard=$INPUT_STANDARD $PROJECT_PATH/magento/app/code/$INPUT_EXTENSION >/dev/null 2>&1
+vendor/bin/phpcs --standard=$INPUT_STANDARD $PROJECT_PATH/magento/app/code/$INPUT_EXTENSION
 
 echo "exit-code is $? - "
 

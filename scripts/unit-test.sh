@@ -22,6 +22,6 @@ fi
 
 bin/magento deploy:mode:set developer
 
-EXIT_CODE=$(./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist > /dev/null 2>&1)
+./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist
 
 echo "exit-code is $? - ${EXIT_CODE}"

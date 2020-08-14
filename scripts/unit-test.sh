@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+#set -e
 
 PROJECT_PATH="$(pwd)"
 
@@ -22,6 +22,6 @@ fi
 
 bin/magento deploy:mode:set developer
 
-EXIT_CODE=$(./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist)
+EXIT_CODE=$(./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist > /dev/null 2>&1)
 
 echo "exit-code is $? - ${EXIT_CODE}"

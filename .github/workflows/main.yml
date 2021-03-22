@@ -80,7 +80,7 @@ jobs:
         HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
         SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
         SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
-        WRITE_USE_SUDO: true
+        WRITE_USE_SUDO: false
       with:
         php: '7.4'
         process: 'deploy-staging'

@@ -1,3 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
 *.iml
+
+magento/app/code/LaPoste/
+magento/app/code/Madit/
+magento/composer.lock.local
+magento/magento.iml
+magento/nginx.conf
+magento/pub/git/
+magento/pub/media/atos_standard/
+

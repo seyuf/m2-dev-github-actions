@@ -69,7 +69,7 @@ jobs:
         process: 'build'
         elasticsearch: 1
     - name: 'launch magento2 zero downtime deploy'
-      if: failed()
+      if: ${{false}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

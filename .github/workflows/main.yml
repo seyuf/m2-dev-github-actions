@@ -37,7 +37,7 @@ jobs:
         elasticsearch: 1
         override_settings: 1
     - name: 'launch magento2 static test'
-      if: ${{true}}
+      if: ${{false}}
       continue-on-error: true
       uses: MAD-I-T/magento-actions@master
       env:

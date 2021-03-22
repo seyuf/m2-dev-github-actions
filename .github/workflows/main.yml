@@ -28,7 +28,7 @@ jobs:
     - name: 'launch magento2 unit test'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@vmaster
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -39,7 +39,7 @@ jobs:
     - name: 'launch magento2 static test'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@v3.0
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -50,7 +50,7 @@ jobs:
     - name: 'phpcs testing'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@v3.0
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -61,29 +61,46 @@ jobs:
         standard: 'Magento2'
     - name: 'launch magento2 build'
       if: ${{true}}
-      uses: MAD-I-T/magento-actions@v3.0
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         php: '7.4'
         process: 'build'
         elasticsearch: 1
-    - name: 'launch magento2 zero downtime deploy'
-      if: success()
-      uses: MAD-I-T/magento-actions@master
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-        BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
-        MYSQL_ROOT_PASSWORD: magento
-        MYSQL_DATABASE: magento
-        HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
-        HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
-        SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
-        SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
-        WRITE_USE_SUDO: true
-      with:
-        php: '7.4'
-        process: 'deploy-staging'
+   # - name: 'launch magento2 zero downtime deploy'
+   #   if: success()
+   #   uses: MAD-I-T/magento-actions@master
+   #   env:
+   #     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+   #     BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
+   #     MYSQL_ROOT_PASSWORD: magento
+   #     MYSQL_DATABASE: magento
+   #     HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
+   #     HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
+   #     SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
+   #     SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
+   #     WRITE_USE_SUDO: true
+   #   with:
+   #     php: '7.4'
+   #     process: 'deploy-staging'
+    - name: 'launch magento2 zero downtime deploy with no permission check'
+        if: success()
+        uses: MAD-I-T/magento-actions@master
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+          BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+          HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
+          HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
+          SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
+          SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
+          WRITE_USE_SUDO: false
+        with:
+          php: '7.4'
+          process: 'deploy-staging'
+          deployer: 'no-permission-check'
     - name: 'unlock deployer if fails'
       if: failure() || cancelled()
       uses: MAD-I-T/magento-actions@master
@@ -132,7 +149,7 @@ jobs:
           submodules: recursive
       - name: 'launch magento2 integration test'
         if: ${{true}}
-        uses: MAD-I-T/magento-actions@v3.0
+        uses: MAD-I-T/magento-actions@master
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:

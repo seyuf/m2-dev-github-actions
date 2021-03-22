@@ -26,7 +26,7 @@ jobs:
       with:
         submodules: recursive
     - name: 'launch magento2 unit test'
-      if: ${{false}}
+      if: ${{true}}
       continue-on-error: true
       uses: MAD-I-T/magento-actions@master
       env:
@@ -37,7 +37,7 @@ jobs:
         elasticsearch: 1
         override_settings: 1
     - name: 'launch magento2 static test'
-      if: ${{false}}
+      if: ${{true}}
       continue-on-error: true
       uses: MAD-I-T/magento-actions@master
       env:
@@ -48,7 +48,7 @@ jobs:
         elasticsearch: 1
         override_settings: 1
     - name: 'phpcs testing'
-      if: ${{false}}
+      if: ${{true}}
       continue-on-error: true
       uses: MAD-I-T/magento-actions@master
       env:
@@ -69,7 +69,7 @@ jobs:
         process: 'build'
         elasticsearch: 1
     - name: 'launch magento2 zero downtime deploy'
-      if: ${{false}}
+      if: ${{true}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -85,7 +85,7 @@ jobs:
         php: '7.4'
         process: 'deploy-staging'
     - name: 'launch magento2 zero downtime deploy with no permission check'
-      if: success()
+      if: ${{true}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -99,8 +99,8 @@ jobs:
         WRITE_USE_SUDO: false
       with:
         php: '7.4'
-        process: 'deploy-staging'
         deployer: 'no-permission-check'
+        process: 'deploy-staging'
     - name: 'unlock deployer if fails'
       if: failure() || cancelled()
       uses: MAD-I-T/magento-actions@master

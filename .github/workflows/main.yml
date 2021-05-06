@@ -113,7 +113,7 @@ jobs:
         deployer: 'no-permission-check'
         process: 'deploy-staging'
     - name: 'unlock deployer if fails'
-      if: failure() || cancelled()
+      if: ${{false}} #failure() || cancelled()
       uses: MAD-I-T/magento-actions@v3.1
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

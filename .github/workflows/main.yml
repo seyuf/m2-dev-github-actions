@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v1
       with:
         submodules: recursive
-    - name: 'launch security scanner'
+    - name: 'launch security scanner files'
       if: ${{true}}
       continue-on-error: true
       uses: MAD-I-T/magento-actions@master
@@ -33,7 +33,18 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         php: '7.4'
-        process: 'security-scan'
+        process: 'security-scan-files'
+        elasticsearch: 1
+        override_settings: 1
+    - name: 'launch security scanner modules'
+      if: ${{true}}
+      continue-on-error: true
+      uses: MAD-I-T/magento-actions@master
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.4'
+        process: 'security-scan-modules'
         elasticsearch: 1
         override_settings: 1
     - name: 'launch magento2 unit test'

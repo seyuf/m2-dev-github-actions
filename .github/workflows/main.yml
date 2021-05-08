@@ -25,6 +25,15 @@ jobs:
     - uses: actions/checkout@v1
       with:
         submodules: recursive
+    - name: 'launch magento2 build'
+      if: ${{true}}
+      uses: MAD-I-T/magento-actions@v3.1
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.4'
+        process: 'build'
+        elasticsearch: 1
     - name: 'launch security scanner files'
       if: ${{true}}
       continue-on-error: true
@@ -81,15 +90,6 @@ jobs:
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'
-    - name: 'launch magento2 build'
-      if: ${{true}}
-      uses: MAD-I-T/magento-actions@v3.1
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.4'
-        process: 'build'
-        elasticsearch: 1
     - name: 'launch magento2 zero downtime deploy'
       if: ${{false}}
       uses: MAD-I-T/magento-actions@v3.1

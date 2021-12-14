@@ -27,7 +27,7 @@ jobs:
         submodules: recursive
     - name: 'launch magento2 build'
       if: ${{true}}
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:

@@ -27,7 +27,7 @@ jobs:
         submodules: recursive
     - name: 'launch magento2 build'
       if: ${{true}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -37,7 +37,7 @@ jobs:
     - name: 'launch security scanner files'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -48,7 +48,7 @@ jobs:
     - name: 'launch security scanner modules'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -59,7 +59,7 @@ jobs:
     - name: 'launch magento2 unit test'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -70,7 +70,7 @@ jobs:
     - name: 'launch magento2 static test'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -81,7 +81,7 @@ jobs:
     - name: 'phpcs testing'
       if: ${{true}}
       continue-on-error: true
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -92,7 +92,7 @@ jobs:
         standard: 'Magento2'
     - name: 'launch magento2 zero downtime deploy'
       if: ${{false}}
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -108,7 +108,7 @@ jobs:
         process: 'deploy-staging'
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}}
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -125,7 +125,7 @@ jobs:
         process: 'deploy-staging'
     - name: 'unlock deployer if fails'
       if: ${{false}} #failure() || cancelled()
-      uses: MAD-I-T/magento-actions@v3.4
+      uses: MAD-I-T/magento-actions@v3.6
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -171,7 +171,7 @@ jobs:
           submodules: recursive
       - name: 'launch magento2 integration test'
         if: ${{false}}
-        uses: MAD-I-T/magento-actions@v3.4
+        uses: MAD-I-T/magento-actions@v3.6
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:

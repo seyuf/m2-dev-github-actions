@@ -35,8 +35,7 @@ jobs:
         process: 'build'
         elasticsearch: 1
     - name: 'launch security scanner files'
-      if: ${{true}}
-      continue-on-error: true
+      if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -46,8 +45,7 @@ jobs:
         elasticsearch: 1
         override_settings: 1
     - name: 'launch security scanner modules'
-      if: ${{true}}
-      continue-on-error: true
+      if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -57,8 +55,7 @@ jobs:
         elasticsearch: 1
         override_settings: 1
     - name: 'launch magento2 unit test'
-      if: ${{true}}
-      continue-on-error: true
+      if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -79,8 +76,7 @@ jobs:
         elasticsearch: 1
         override_settings: 1
     - name: 'phpcs testing'
-      if: ${{true}}
-      continue-on-error: true
+      if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -91,7 +87,7 @@ jobs:
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'
     - name: 'launch magento2 zero downtime deploy'
-      if: ${{false}}
+      if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

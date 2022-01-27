@@ -79,6 +79,7 @@ jobs:
         php: '7.4'
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
+        severity: 10
         standard: 'Magento2'
     - name: 'launch magento2 zero downtime deploy'
       if: always()

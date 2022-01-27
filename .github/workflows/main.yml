@@ -43,7 +43,6 @@ jobs:
         php: '7.4'
         process: 'security-scan-files'
         elasticsearch: 1
-        override_settings: 1
     - name: 'launch security scanner modules'
       if: always()
       uses: MAD-I-T/magento-actions@master
@@ -53,7 +52,6 @@ jobs:
         php: '7.4'
         process: 'security-scan-modules'
         elasticsearch: 1
-        override_settings: 1
     - name: 'launch magento2 unit test'
       if: always()
       uses: MAD-I-T/magento-actions@master
@@ -63,7 +61,6 @@ jobs:
         php: '7.4'
         process: 'unit-test'
         elasticsearch: 1
-        override_settings: 1
     - name: 'launch magento2 static test'
       if: ${{true}}
       continue-on-error: true
@@ -74,7 +71,6 @@ jobs:
         php: '7.4'
         process: 'static-test'
         elasticsearch: 1
-        override_settings: 1
     - name: 'phpcs testing'
       if: always()
       uses: MAD-I-T/magento-actions@master
@@ -82,7 +78,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         php: '7.4'
-        override_settings: 1
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'

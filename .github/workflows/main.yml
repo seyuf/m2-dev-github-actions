@@ -25,15 +25,6 @@ jobs:
     - uses: actions/checkout@v1
       with:
         submodules: recursive
-    - name: 'launch magento2 build'
-      if: ${{true}}
-      uses: MAD-I-T/magento-actions@v3.8
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.4'
-        process: 'build'
-        elasticsearch: 1
     - name: 'launch security scanner files'
       if: always()
       uses: MAD-I-T/magento-actions@v3.8
@@ -81,24 +72,18 @@ jobs:
         extension: 'Magento/CatalogSearch'
         severity: 10
         standard: 'Magento2'
-    - name: 'launch magento2 zero downtime deploy'
-      if: ${{false}}
+    - name: 'launch magento2 build'
+      if: always()
+      id: build
       uses: MAD-I-T/magento-actions@v3.8
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-        BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
-        MYSQL_ROOT_PASSWORD: magento
-        MYSQL_DATABASE: magento
-        HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
-        HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
-        SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
-        SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
-        WRITE_USE_SUDO: false
       with:
         php: '7.4'
-        process: 'deploy-staging'
+        process: 'build'
+        elasticsearch: 1
     - name: 'launch magento2 zero downtime deploy with no permission check'
-      if: ${{false}}
+      if: ${{false}} # if: success()
       uses: MAD-I-T/magento-actions@v3.8
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -115,7 +100,7 @@ jobs:
         deployer: 'no-permission-check'
         process: 'deploy-staging'
     - name: 'unlock deployer if fails'
-      if: ${{false}} #failure() || cancelled()
+      if: ${{false}} # if: failure() || cancelled()
       uses: MAD-I-T/magento-actions@v3.8
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -130,6 +115,40 @@ jobs:
       with:
         php: '7.4'
         process: 'cleanup-staging'
+    - name: 'start zero downtime deploy on production'
+      if: ${{false}} # if: steps.build.outcome == 'success'
+      uses: MAD-I-T/magento-actions@3.8
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
+        MYSQL_ROOT_PASSWORD: magento
+        MYSQL_DATABASE: magento
+        HOST_DEPLOY_PATH: ${{secrets.PROD_HOST_DEPLOY_PATH}}
+        HOST_DEPLOY_PATH_BUCKET: ${{secrets.PROD_HOST_DEPLOY_PATH}}/bucket
+        SSH_PRIVATE_KEY: ${{secrets.PROD_SSH_PRIVATE_KEY}}
+        SSH_CONFIG: ${{secrets.PROD_SSH_CONFIG}}
+        WRITE_USE_SUDO: false
+      with:
+        php: '7.4'
+        process: 'deploy-prod'
+        deployer: 'no-permission-check'
+        override_settings: 1
+    - name: 'unlock php deployer if the deployment fails on production'
+      if: ${{false}} #if: failure() || cancelled()
+      uses: MAD-I-T/magento-actions@master
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
+        MYSQL_ROOT_PASSWORD: magento
+        MYSQL_DATABASE: magento
+        HOST_DEPLOY_PATH: ${{secrets.PROD_HOST_DEPLOY_PATH}}
+        HOST_DEPLOY_PATH_BUCKET: ${{secrets.PROD_HOST_DEPLOY_PATH}}/bucket
+        SSH_PRIVATE_KEY: ${{secrets.PROD_SSH_PRIVATE_KEY}}
+        SSH_CONFIG: ${{secrets.PROD_SSH_CONFIG}}
+        WRITE_USE_SUDO: false
+      with:
+        php: '7.4'
+        process: 'cleanup-prod'
 
   magento2-integration-test:
     runs-on: ubuntu-latest

@@ -22,16 +22,15 @@ jobs:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v1
-      with:
-        submodules: recursive
+    - uses: actions/checkout@v2
+      #with:
+      #  submodules: recursive
     - name: 'launch security scanner files'
       if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.4'
         process: 'security-scan-files'
         elasticsearch: 1
     - name: 'launch security scanner modules'
@@ -65,7 +64,6 @@ jobs:
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.4'
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
         severity: 10
@@ -93,7 +91,6 @@ jobs:
         SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
-        php: '7.4'
         deployer: 'no-permission-check'
         process: 'deploy-staging'
     - name: 'unlock deployer if fails'
@@ -110,7 +107,6 @@ jobs:
         SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
-        php: '7.4'
         process: 'cleanup-staging'
     - name: 'start zero downtime deploy on production'
       if: ${{false}} # if: steps.build.outcome == 'success'
@@ -126,7 +122,6 @@ jobs:
         SSH_CONFIG: ${{secrets.PROD_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
-        php: '7.4'
         process: 'deploy-prod'
         deployer: 'no-permission-check'
         override_settings: 1
@@ -144,7 +139,6 @@ jobs:
         SSH_CONFIG: ${{secrets.PROD_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
-        php: '7.4'
         process: 'cleanup-prod'
 
   magento2-integration-test:

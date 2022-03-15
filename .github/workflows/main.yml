@@ -25,23 +25,6 @@ jobs:
     - uses: actions/checkout@v1
       with:
         submodules: recursive
-    - name: 'launch security scanner files'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.9
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        process: 'security-scan-files'
-        elasticsearch: 1
-    - name: 'launch security scanner modules'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.9
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.4'
-        process: 'security-scan-modules'
-        elasticsearch: 1
     - name: 'launch magento2 unit test'
       if: always()
       uses: MAD-I-T/magento-actions@v3.9
@@ -76,6 +59,23 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
+        elasticsearch: 1
+    - name: 'launch security scanner files'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'security-scan-files'
+        elasticsearch: 1
+    - name: 'launch security scanner modules'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.4'
+        process: 'security-scan-modules'
         elasticsearch: 1
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} # if: success()

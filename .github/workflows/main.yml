@@ -54,7 +54,7 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'phpcs-test'
-        extension: 'vendor/magento/module-email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
+        extension: 'magento/vendor/magento/module-email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
         severity: 10
         standard: 'Magento2'
         

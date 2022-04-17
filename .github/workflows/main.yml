@@ -28,7 +28,7 @@ jobs:
         
     - name: 'launch magento2 unit test only on email module'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.10
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:

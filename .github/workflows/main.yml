@@ -28,7 +28,7 @@ jobs:
         
     - name: 'launch magento2 unit test only on email module'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -39,7 +39,7 @@ jobs:
         
     - name: 'launch magento2 static test on all code'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -49,7 +49,7 @@ jobs:
         
     - name: 'Magento coding standard checker'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -62,7 +62,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -72,7 +72,7 @@ jobs:
         
     - name: 'launch security scanner files'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -82,7 +82,7 @@ jobs:
         
     - name: 'launch security scanner modules'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -93,7 +93,7 @@ jobs:
         
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} # if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -110,7 +110,7 @@ jobs:
         
     - name: 'unlock deployer if fails'
       if: ${{false}} # if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -127,7 +127,7 @@ jobs:
         
     - name: 'start zero downtime deploy on production'
       if: ${{false}} # if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -144,7 +144,7 @@ jobs:
         
     - name: 'unlock php deployer if the deployment fails on production'
       if: ${{false}} #if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@v3.11
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz

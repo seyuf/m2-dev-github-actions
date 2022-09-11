@@ -22,10 +22,13 @@ jobs:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v1 
       with:
         submodules: recursive
-    - name: 'launch magento2 unit test'
+        
+  
+        
+    - name: 'launch magento2 unit test only on email module'
       if: always()
       uses: MAD-I-T/magento-actions@v3.14
       env:
@@ -33,7 +36,10 @@ jobs:
       with:
         process: 'unit-test'
         elasticsearch: 1
-    - name: 'launch magento2 static test'
+        unit_test_subset_path: 'vendor/magento/module-email/Test/Unit'
+        
+        
+    - name: 'launch magento2 static test on all code'
       if: always()
       uses: MAD-I-T/magento-actions@v3.14
       env:
@@ -41,16 +47,20 @@ jobs:
       with:
         process: 'static-test'
         elasticsearch: 1
-    - name: 'phpcs testing'
+        
+        
+    - name: 'Magento coding standard checker'
       if: always()
       uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'phpcs-test'
-        extension: 'Magento/CatalogSearch'
+        extension: 'magento/vendor/magento/module-email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
         severity: 10
         standard: 'Magento2'
+        
+        
     - name: 'launch magento2 build'
       if: always()
       id: build
@@ -60,6 +70,8 @@ jobs:
       with:
         process: 'build'
         elasticsearch: 1
+        
+        
     - name: 'launch security scanner files'
       if: always()
       uses: MAD-I-T/magento-actions@v3.14
@@ -68,6 +80,8 @@ jobs:
       with:
         process: 'security-scan-files'
         elasticsearch: 1
+        
+        
     - name: 'launch security scanner modules'
       if: always()
       uses: MAD-I-T/magento-actions@v3.14
@@ -77,6 +91,8 @@ jobs:
         php: '7.4'
         process: 'security-scan-modules'
         elasticsearch: 1
+        
+        
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} # if: success()
       uses: MAD-I-T/magento-actions@v3.14
@@ -93,6 +109,7 @@ jobs:
       with:
         deployer: 'no-permission-check'
         process: 'deploy-staging'
+        
     - name: 'unlock deployer if fails'
       if: ${{false}} # if: failure() || cancelled()
       uses: MAD-I-T/magento-actions@v3.14
@@ -108,6 +125,8 @@ jobs:
         WRITE_USE_SUDO: false
       with:
         process: 'cleanup-staging'
+        
+        
     - name: 'start zero downtime deploy on production'
       if: ${{false}} # if: steps.build.outcome == 'success'
       uses: MAD-I-T/magento-actions@v3.14
@@ -122,9 +141,9 @@ jobs:
         SSH_CONFIG: ${{secrets.PROD_SSH_CONFIG}}
         WRITE_USE_SUDO: false
       with:
-        process: 'deploy-prod'
+        process: 'deploy-production'
         deployer: 'no-permission-check'
-        override_settings: 1
+        
     - name: 'unlock php deployer if the deployment fails on production'
       if: ${{false}} #if: failure() || cancelled()
       uses: MAD-I-T/magento-actions@v3.14
@@ -140,6 +159,9 @@ jobs:
         WRITE_USE_SUDO: false
       with:
         process: 'cleanup-prod'
+
+
+
 
   magento2-integration-test:
     runs-on: ubuntu-latest

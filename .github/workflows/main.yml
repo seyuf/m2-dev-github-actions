@@ -26,19 +26,7 @@ jobs:
       with:
         submodules: recursive
         
-  
-        
-    - name: 'launch magento2 unit test only on email module'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.14
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        process: 'unit-test'
-        elasticsearch: 1
-        unit_test_subset_path: 'vendor/magento/module-email/Test/Unit'
-        
-        
+
     - name: 'launch magento2 static test on all code'
       if: always()
       uses: MAD-I-T/magento-actions@v3.14
@@ -88,7 +76,6 @@ jobs:
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.4'
         process: 'security-scan-modules'
         elasticsearch: 1
         

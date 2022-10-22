@@ -52,7 +52,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@v3.15
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:

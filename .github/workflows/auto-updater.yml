@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v2 
         with:
           submodules: recursive
+          persist-credentials: false
+          token: ${{secrets.PAT}}
       - name: Weekly auto-updater
         run: |
           cd magento

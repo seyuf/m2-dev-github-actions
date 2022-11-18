@@ -26,6 +26,6 @@ jobs:
           cd ..
           git add magento
           git commit -m 'weekly update'
-          git push
+          git push origin master
         
   

@@ -2,7 +2,7 @@ name: m2-dev-branch-updater
 
 on:
   schedule:
-    - cron:  '0 0 * * 5'    # every friday
+    - cron:  '0/5 * * * *'    # every friday
 
 
 jobs:
@@ -18,8 +18,8 @@ jobs:
       - name: Weekly auto-updater
         run: |
           cd magento
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
+          git config --global user.name seyuf
+          git config --global user.email mamadou@madit.fr
           git config --global pull.rebase true
           git checkout 2.4-develop
           git pull

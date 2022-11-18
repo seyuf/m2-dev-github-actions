@@ -2,7 +2,7 @@ name: m2-dev-branch-updater
 
 on:
   schedule:
-    - cron:  '0/5 * * * *'    # every friday
+    - cron:  '0 0 * * 5'    # every friday
 
 
 jobs:

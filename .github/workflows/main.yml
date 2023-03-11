@@ -22,7 +22,7 @@ jobs:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v1 
+    - uses: actions/checkout@v3 
       with:
         submodules: recursive
         
@@ -47,7 +47,18 @@ jobs:
         extension: 'magento/vendor/magento/module-email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
         severity: 10
         standard: 'Magento2'
-        
+     
+    - name: 'mess detector'
+      uses: MAD-I-T/magento-actions@v3.18
+      with:
+        process: 'mess-detector'
+        md_src_path: 'vendor/magento/module-email'
+
+    - name: 'phpstan'
+      uses: MAD-I-T/magento-actions@v3.18
+      with:
+        process: 'phpstan'
+        exec_path: '../Madit/Sips2'
         
     - name: 'launch magento2 build'
       if: always()
@@ -176,9 +187,10 @@ jobs:
           - 5672:5672
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
+      
       - name: 'launch magento2 integration test'
         if: ${{false}}
         uses: MAD-I-T/magento-actions@v3.18
@@ -188,3 +200,35 @@ jobs:
           php: '7.4'
           process: 'integration-test'
           elasticsearch: 1
+      
+      
+      - name: 'launch magento2 integration test custom testsuite'
+        if: always()
+        uses: MAD-I-T/magento-actions@v3.18
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          process: 'integration-test'
+          elasticsearch: 1
+          testsuite: "Memory Usage Tests"
+      
+      - name: 'integration test class'
+        if: always()
+        uses: MAD-I-T/magento-actions@v3.18
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          process: 'integration-test'
+          elasticsearch: 1
+          integration_class: "./testsuite/Magento/MemoryUsageTest.php"
+
+      - name: 'integration test class filter'
+        if: always()
+        uses: MAD-I-T/magento-actions@v3.18
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          process: 'integration-test'
+          elasticsearch: 1
+          integration_class: "./testsuite/Magento/MemoryUsageTest.php"
+          integration_filter: "testAppReinitializationNoMemoryLeak"

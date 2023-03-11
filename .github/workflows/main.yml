@@ -162,7 +162,6 @@ jobs:
 
   magento2-integration-test:
     runs-on: ubuntu-latest
-    container: ubuntu
     name: 'm2 integration test'
     services:
       mysql:

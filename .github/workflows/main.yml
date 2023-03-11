@@ -43,7 +43,7 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'phpcs-test'
-        extension: 'magento/vendor/magento/module-email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
+        extension: 'magento/app/code/Magento/Email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
         severity: 10
         standard: 'Magento2'
    
@@ -84,14 +84,14 @@ jobs:
       uses: MAD-I-T/magento-actions@v3.19
       with:
         process: 'mess-detector'
-        md_src_path: 'vendor/magento/module-email'
+        md_src_path: 'app/code/Magento/Email'
 
     - name: 'phpstan'
       if: always()
       uses: MAD-I-T/magento-actions@v3.19
       with:
         process: 'phpstan'
-        exec_path: 'vendor/magento/module-email'
+        exec_path: 'app/code/Magento/Email'
         
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} # if: success()

@@ -46,20 +46,7 @@ jobs:
         extension: 'magento/vendor/magento/module-email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
         severity: 10
         standard: 'Magento2'
-     
-    - name: 'mess detector'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.19
-      with:
-        process: 'mess-detector'
-        md_src_path: 'vendor/magento/module-email'
-
-    - name: 'phpstan'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.19
-      with:
-        process: 'phpstan'
-        exec_path: '../Madit/Sips2'
+   
         
     - name: 'launch magento2 build'
       if: always()
@@ -90,7 +77,21 @@ jobs:
       with:
         process: 'security-scan-modules'
         elasticsearch: 1
-        
+    
+    
+    - name: 'mess detector'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.19
+      with:
+        process: 'mess-detector'
+        md_src_path: 'vendor/magento/module-email'
+
+    - name: 'phpstan'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.19
+      with:
+        process: 'phpstan'
+        exec_path: 'vendor/magento/module-email'
         
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} # if: success()

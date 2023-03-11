@@ -48,12 +48,14 @@ jobs:
         standard: 'Magento2'
      
     - name: 'mess detector'
+      if: always()
       uses: MAD-I-T/magento-actions@v3.19
       with:
         process: 'mess-detector'
         md_src_path: 'vendor/magento/module-email'
 
     - name: 'phpstan'
+      if: always()
       uses: MAD-I-T/magento-actions@v3.19
       with:
         process: 'phpstan'

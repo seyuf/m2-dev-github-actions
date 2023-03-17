@@ -28,7 +28,7 @@ jobs:
 
     - name: 'launch magento2 static test on all code'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -38,7 +38,7 @@ jobs:
         
     - name: 'Magento coding standard checker'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -51,7 +51,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -61,7 +61,7 @@ jobs:
         
     - name: 'launch security scanner files'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -71,7 +71,7 @@ jobs:
         
     - name: 'launch security scanner modules'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -81,14 +81,14 @@ jobs:
     
     - name: 'mess detector'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       with:
         process: 'mess-detector'
         md_src_path: 'app/code/Magento/Email'
 
     - name: 'phpstan'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       with:
         process: 'phpstan'
         exec_path: 'app/code/Magento/Email'
@@ -194,7 +194,7 @@ jobs:
       
       - name: 'launch magento2 integration test'
         if: ${{false}}
-        uses: MAD-I-T/magento-actions@v3.19
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -205,7 +205,7 @@ jobs:
       
       - name: 'launch magento2 integration test custom testsuite'
         if: always()
-        uses: MAD-I-T/magento-actions@v3.19
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -215,7 +215,7 @@ jobs:
       
       - name: 'integration test class'
         if: always()
-        uses: MAD-I-T/magento-actions@v3.19
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -225,7 +225,7 @@ jobs:
 
       - name: 'integration test class filter'
         if: always()
-        uses: MAD-I-T/magento-actions@v3.19
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:

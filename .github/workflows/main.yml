@@ -16,7 +16,7 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         
-      opensearch:
+      elasticsearch:
         image: opensearchproject/opensearch:1.2.1
         ports:
           - 9200:9200
@@ -58,7 +58,8 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
-        
+        elasticsearch: 1
+
         
     - name: 'launch security scanner files'
       if: always()

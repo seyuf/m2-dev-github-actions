@@ -35,6 +35,7 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'static-test'
+        opensearch: 1
         
         
     - name: 'Magento coding standard checker'

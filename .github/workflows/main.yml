@@ -58,7 +58,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
-        elasticsearch: 1
 
         
     - name: 'launch security scanner files'

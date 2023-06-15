@@ -15,3 +15,5 @@ Because a habit to follow https://12factor.net composer credentials are set thro
 2. Create variable `COMPOSER_AUTH`
 3. Add you composer auth as value e.g :
    `{"http-basic":{"repo.magento.com": {"username": "xxxxxxxxxxxxxx", "password": "xxxxxxxxxxxxxx"}}}`
+
+One can use our **[magento-devbox](https://github.com/MAD-I-T/magento-devbox)** as local dev environment, linux and mac os supported.

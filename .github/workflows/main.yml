@@ -196,8 +196,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-          with:
-            submodules: recursive
+        with:
+          submodules: recursive
 
 
       - name: 'launch magento2 integration test custom testsuite'

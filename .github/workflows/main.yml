@@ -23,14 +23,14 @@ jobs:
         options: -e="discovery.type=single-node" -e "plugins.security.disabled=true"  -e "plugins.security.ssl.http.enabled=false" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
        
     steps:
-    - uses: actions/checkout@v3 
+    - uses: actions/checkout@v4 
       with:
         submodules: recursive
         
 
     - name: 'launch magento2 static test on all code'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.21
+      if: ${{false}}
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -39,8 +39,8 @@ jobs:
         
         
     - name: 'Magento coding standard checker'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.21
+      if: (!cancelled())
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -51,9 +51,9 @@ jobs:
    
         
     - name: 'launch magento2 build'
-      if: always()
+      if: (!cancelled())
       id: build
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -62,8 +62,8 @@ jobs:
 
         
     - name: 'launch security scanner files'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.21
+      if: (!cancelled())
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -71,8 +71,8 @@ jobs:
         
         
     - name: 'launch security scanner modules'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.21
+      if: (!cancelled())
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -80,22 +80,22 @@ jobs:
     
     
     - name: 'mess detector'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.21
+      if: (!cancelled())
+      uses: MAD-I-T/magento-actions@v3.28
       with:
         process: 'mess-detector'
         md_src_path: 'app/code/Magento/Email'
 
     - name: 'phpstan'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.21
+      if: ${{false}}
+      uses: MAD-I-T/magento-actions@v3.28
       with:
         process: 'phpstan'
         exec_path: 'app/code/Magento/Email'
         
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} # if: success()
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -112,7 +112,7 @@ jobs:
         
     - name: 'unlock deployer if fails'
       if: ${{false}} # if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -129,7 +129,7 @@ jobs:
         
     - name: 'start zero downtime deploy on production'
       if: ${{false}} # if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -146,7 +146,7 @@ jobs:
         
     - name: 'unlock php deployer if the deployment fails on production'
       if: ${{false}} #if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -162,6 +162,71 @@ jobs:
 
 
 
+
+  magento2-integration-test-latest:
+    runs-on: ubuntu-latest
+    name: 'm2 integration test latest'
+    services:
+      mysql:
+        image: docker://mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        ports:
+          - 3106:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      #elasticsearch:
+      #  image: docker://elasticsearch:7.17.0
+      #  ports:
+      #    - 9200:9200
+      #  options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      rabbitmq:
+        image: docker://rabbitmq:3.9-alpine
+        env:
+          RABBITMQ_DEFAULT_USER: "magento"
+          RABBITMQ_DEFAULT_PASS: "magento"
+          RABBITMQ_DEFAULT_VHOST: "/"
+        ports:
+          - 5672:5672
+      opensearch:
+        image: ghcr.io/mad-i-t/magento-opensearch:2.5.0
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" -e "plugins.security.disabled=true" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+          with:
+            submodules: recursive
+
+
+      - name: 'launch magento2 integration test custom testsuite'
+        if: ${{true}}
+        uses: MAD-I-T/magento-actions@v3.28
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          process: 'integration-test'
+          testsuite: "Memory Usage Tests"
+      
+      - name: 'integration test class'
+        if: ${{true}}
+        uses: MAD-I-T/magento-actions@v3.28
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          process: 'integration-test'
+          integration_class: "./testsuite/Magento/MemoryUsageTest.php"
+
+      - name: 'integration test class filter'
+        if: ${{true}}
+        uses: MAD-I-T/magento-actions@v3.28
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          process: 'integration-test'
+          integration_class: "./testsuite/Magento/MemoryUsageTest.php"
+          integration_filter: "testAppReinitializationNoMemoryLeak"
 
   magento2-integration-test:
     runs-on: ubuntu-latest
@@ -205,7 +270,7 @@ jobs:
       
       
       - name: 'launch magento2 integration test custom testsuite'
-        if: always()
+        if: (!cancelled())
         uses: MAD-I-T/magento-actions@v3.21
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -215,7 +280,7 @@ jobs:
           testsuite: "Memory Usage Tests"
       
       - name: 'integration test class'
-        if: always()
+        if: (!cancelled())
         uses: MAD-I-T/magento-actions@v3.21
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -225,7 +290,7 @@ jobs:
           integration_class: "./testsuite/Magento/MemoryUsageTest.php"
 
       - name: 'integration test class filter'
-        if: always()
+        if: (!cancelled())
         uses: MAD-I-T/magento-actions@v3.21
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}

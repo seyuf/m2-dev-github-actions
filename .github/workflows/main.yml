@@ -81,7 +81,7 @@ jobs:
 
     - name: 'mess detector'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@v3.29
+      uses: MAD-I-T/magento-actions@v3.30
       with:
         process: 'mess-detector'
         md_src_path: 'app/code/Magento/Email'

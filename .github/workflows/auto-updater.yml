@@ -4,7 +4,6 @@ on:
   schedule:
     - cron:  '0 0 * * 5'    # every friday
 
-
 jobs:
   magento-updater:
     runs-on: ubuntu-latest

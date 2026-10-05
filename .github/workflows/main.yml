@@ -1,5 +1,4 @@
 name: m2-actions-test
-
 on: [push]
 
 jobs:
